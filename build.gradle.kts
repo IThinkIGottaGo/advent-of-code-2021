@@ -22,6 +22,7 @@ tasks {
     }
     compileJava {
         options.encoding = Charsets.UTF_8.name()
+        sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
     }
     compileKotlin {
