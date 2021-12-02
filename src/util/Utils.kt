@@ -9,6 +9,9 @@ import kotlin.streams.asSequence
 fun readInput(name: String) =
     File("src/${getDirectCaller().packageName.substringBefore('.')}", "$name.txt").readLines()
 
+fun readInputAsInts(name: String) =
+    File("src/${getDirectCaller().packageName.substringBefore('.')}", "$name.txt").readLines().map(String::toInt)
+
 fun String.splitBySpace() = this.split(" ")
 
 inline fun <reified A, reified B> List<String>.stringsToPair(): Pair<A, B> {

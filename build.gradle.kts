@@ -13,7 +13,7 @@ dependencies {
     implementation(kotlin("reflect"))
 }
 
-val javaVersion = "9"
+val javaVersion = "17"
 val ktVersion = "1.6"
 
 tasks {
