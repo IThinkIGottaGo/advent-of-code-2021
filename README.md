@@ -10,7 +10,20 @@ If you stuck with Kotlin-specific questions or anything related to this template
 - [Kotlin Slack][slack]
 - Template [issue tracker][issues]
 
+| The Day | Finished | The Day | Finished | The Day | Finished |
+| :-----: | :------: | :-----: | :------: | :-----: | :------: |
+|  day01  |    ✅     |  day10  |          |  day19  |          |
+|  day02  |    ✅     |  day11  |          |  day20  |          |
+|  day03  |          |  day12  |          |  day21  |          |
+|  day04  |          |  day13  |          |  day22  |          |
+|  day05  |          |  day14  |          |  day23  |          |
+|  day06  |          |  day15  |          |  day24  |          |
+|  day07  |          |  day16  |          |  day25  |          |
+|  day08  |          |  day17  |          |         |          |
+|  day09  |          |  day18  |          |         |          |
+
 [^aoc]:
+
     [Advent of Code][aoc] – an annual event in December since 2015. Every year since then, with the first day of December, a
     programming puzzles contest is published every day for twenty-four days. A set of Christmas-oriented challenges provide
     any input you have to use to answer using the language of your choice.
