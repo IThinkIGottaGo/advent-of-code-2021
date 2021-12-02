@@ -1,4 +1,4 @@
-package day2.part2
+package day02.part2
 
 import util.readInput
 import util.splitBySpace
