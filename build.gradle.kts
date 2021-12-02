@@ -6,9 +6,11 @@ repositories {
     mavenCentral()
 }
 
+@Suppress("GradlePackageUpdate")
 dependencies {
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation(platform(kotlin("bom")))
+    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("reflect"))
 }
 
 val javaVersion = "9"
