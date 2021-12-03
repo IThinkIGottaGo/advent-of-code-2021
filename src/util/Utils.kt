@@ -18,7 +18,6 @@ inline fun <reified A, reified B> List<String>.stringsToPair(): Pair<A, B> {
     return Pair(stringToType(this[0].trim()), stringToType(this[1].trim()))
 }
 
-
 inline fun <reified T> stringToType(s: String) =
     when (typeOf<T>().classifier) {
         Int::class -> s.toInt() as T
