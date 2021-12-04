@@ -25,6 +25,27 @@ inline fun <reified T> stringToType(s: String) =
         else -> error("unsupported type")
     }
 
+inline fun <T, K> Iterable<T>.groupByIndexed(keySelector: (index: Int, T) -> K): Map<K, List<T>> {
+    return groupByToIndexed(LinkedHashMap(), keySelector)
+}
+
+inline fun <T, K, M : MutableMap<in K, MutableList<T>>> Iterable<T>.groupByToIndexed(
+    destination: M,
+    keySelector: (index: Int, T) -> K
+): M {
+    for ((index, element) in this.withIndex()) {
+        val key = keySelector(index, element)
+        val list = destination.getOrPut(key) { ArrayList() }
+        list.add(element)
+    }
+    return destination
+}
+
+inline fun <T> Sequence<T>.firstOrElse(predicate: (T) -> Boolean, defaultValue: T): T {
+    for (element in this) if (predicate(element)) return element
+    return defaultValue
+}
+
 private fun getDirectCaller(): Class<*> =
     StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE).walk { stream ->
         stream.asSequence()
