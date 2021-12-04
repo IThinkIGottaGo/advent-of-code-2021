@@ -15,7 +15,7 @@ If you stuck with Kotlin-specific questions or anything related to this template
 |  day01  |    ✅     |  day10  |          |  day19  |          |
 |  day02  |    ✅     |  day11  |          |  day20  |          |
 |  day03  |    ✅     |  day12  |          |  day21  |          |
-|  day04  |          |  day13  |          |  day22  |          |
+|  day04  |    ✅     |  day13  |          |  day22  |          |
 |  day05  |          |  day14  |          |  day23  |          |
 |  day06  |          |  day15  |          |  day24  |          |
 |  day07  |          |  day16  |          |  day25  |          |
