@@ -12,6 +12,9 @@ fun readInput(name: String) =
 fun readInputAsInts(name: String) =
     File("src/${getDirectCaller().packageName.substringBefore('.')}", "$name.txt").readLines().map(String::toInt)
 
+fun readInputOneLine(name: String) =
+    File("src/${getDirectCaller().packageName.substringBefore('.')}", "$name.txt").readText()
+
 fun String.splitBySpace() = this.split(" ")
 
 inline fun <reified A, reified B> List<String>.stringsToPair(): Pair<A, B> {
