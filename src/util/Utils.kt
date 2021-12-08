@@ -7,13 +7,17 @@ import kotlin.reflect.typeOf
 import kotlin.streams.asSequence
 
 fun readInput(name: String) =
-    File("src/${getDirectCaller().packageName.substringBefore('.')}", "$name.txt").readLines()
+    File("src/${getDirectCaller().packageName.substringBefore('.')}", "$name.txt")
+        .readLines()
 
 fun readInputAsInts(name: String) =
-    File("src/${getDirectCaller().packageName.substringBefore('.')}", "$name.txt").readLines().map(String::toInt)
+    File("src/${getDirectCaller().packageName.substringBefore('.')}", "$name.txt")
+        .readLines()
+        .map(String::toInt)
 
 fun readInputOneLine(name: String) =
-    File("src/${getDirectCaller().packageName.substringBefore('.')}", "$name.txt").readText()
+    File("src/${getDirectCaller().packageName.substringBefore('.')}", "$name.txt")
+        .readText()
 
 fun String.splitBySpace() = this.split(" ")
 
@@ -33,8 +37,7 @@ inline fun <T, K> Iterable<T>.groupByIndexed(keySelector: (index: Int, T) -> K):
 }
 
 inline fun <T, K, M : MutableMap<in K, MutableList<T>>> Iterable<T>.groupByToIndexed(
-    destination: M,
-    keySelector: (index: Int, T) -> K
+    destination: M, keySelector: (index: Int, T) -> K
 ): M {
     for ((index, element) in this.withIndex()) {
         val key = keySelector(index, element)
@@ -49,11 +52,36 @@ inline fun <T> Sequence<T>.firstOrElse(predicate: (T) -> Boolean, defaultValue: 
     return defaultValue
 }
 
-private fun getDirectCaller(): Class<*> =
-    StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE).walk { stream ->
-        stream.asSequence()
-            .map(StackFrame::getDeclaringClass)
-            .drop(2)
-            .first()
+inline fun <T> Sequence<T>.partitionWithIndex(predicate: (index: Int, T) -> Boolean): Pair<List<T>, List<T>> {
+    val first = ArrayList<T>()
+    val second = ArrayList<T>()
+    for ((index, element) in this.withIndex()) {
+        if (predicate(index, element)) {
+            first.add(element)
+        } else {
+            second.add(element)
+        }
     }
+    return Pair(first, second)
+}
 
+inline fun <T> MutableList<T>.removeFirstIf(predicate: (T) -> Boolean): T {
+    if (isEmpty()) throw NoSuchElementException("List is empty.")
+    else {
+        for ((index, element) in this.withIndex()) {
+            if (predicate(element)) {
+                return removeAt(index)
+            }
+        }
+        throw NoSuchElementException("Collection contains no element matching the predicate.")
+    }
+}
+
+private fun getDirectCaller(): Class<*> =
+    StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE)
+        .walk { stream ->
+            stream.asSequence()
+                .map(StackFrame::getDeclaringClass)
+                .drop(2)
+                .first()
+        }
