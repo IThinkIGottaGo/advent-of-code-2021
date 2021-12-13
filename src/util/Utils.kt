@@ -77,6 +77,21 @@ inline fun <T> MutableList<T>.removeFirstIf(predicate: (T) -> Boolean): T {
     }
 }
 
+inline fun <T> MutableList<T>.removeFromLastUntil(predicate: (T) -> Boolean): Boolean {
+    var result = false
+    val iterator = listIterator(size)
+    while (iterator.hasPrevious()) {
+        val e = iterator.previous()
+        if (predicate(e)) {
+            break
+        } else {
+            iterator.remove()
+            result = true
+        }
+    }
+    return result
+}
+
 private fun getDirectCaller(): Class<*> =
     StackWalker.getInstance(Option.RETAIN_CLASS_REFERENCE)
         .walk { stream ->
