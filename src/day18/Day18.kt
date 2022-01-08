@@ -271,8 +271,7 @@ fun main() {
 
     val input = readInput("day18")
     check(part1(input) == 3675)
-    println(part2(input))
-//    check(part2(input) == )
+    check(part2(input) == 4650)
 }
 
 private fun String.buildSnailfishType(index: Int = 0): Result {
