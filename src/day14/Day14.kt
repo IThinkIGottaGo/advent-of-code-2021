@@ -5,7 +5,7 @@ import util.readInput
 /**
  * --- 第 14 天：高聚物延展(Extended Polymerization) ---
  *
- * 在如此深的位置，难以置信的压力已经开始给你的潜艇造成负担。但你的潜艇配备了 [高分子聚合物(polymerization)](https://en.wikipedia.org/wiki/Polymerization) 设备可以用来产生合适的材料来加强你的潜艇，
+ * 在如此深的位置，难以置信的压力已经开始给你的潜艇造成负担。但你的潜艇配备了 [高分子聚合物 (polymerization)](https://en.wikipedia.org/wiki/Polymerization) 设备可以用来产生合适的材料来加强你的潜艇，
  * 而附近有火山活动的洞穴应该能给你提供足够数量的必要输入元素。
  *
  * 潜艇的手册提供了找到最佳聚合物配方的说明；特别的，它还提供了一个 **高聚物模板(polymer template)** 以及一系列 **成对添加(pair insertion)** 的规则（这便是你的谜题输入）。
@@ -73,57 +73,73 @@ import util.readInput
  */
 fun main() {
     // 第一个问题
-    fun part1(input: List<String>): Int {
-        Rules.init(input.drop(2))
-        var template = input[0]
-        repeat(10) {
-            val tempBuilder = StringBuilder()
-            val last = template.last()
-            template.windowed(2) {
-                tempBuilder.append("${it[0]}${Rules.getMatchResult(it)}")
-            }
-            tempBuilder.append(last)
-            template = tempBuilder.toString()
-        }
-        val eachCount = template.groupingBy { it }.eachCount()
-        val max = eachCount.maxOf { it.value }
-        val min = eachCount.minOf { it.value }
-        return max - min
+    fun part1(input: List<String>): Long {
+        val rulesMap = mutableMapOf<String, String>()
+        val resultMap = mutableMapOf<String, Long>()
+        rulesMap.initRules(input.drop(2))
+        resultMap.initResults(input[0], rulesMap)
+        return resultMap.polymerize(10, rulesMap)
     }
 
     // 第二个问题
     fun part2(input: List<String>): Long {
-        TODO()
+        val rulesMap = mutableMapOf<String, String>()
+        val resultMap = mutableMapOf<String, Long>()
+        rulesMap.initRules(input.drop(2))
+        resultMap.initResults(input[0], rulesMap)
+        return resultMap.polymerize(40, rulesMap)
     }
 
     val testInput = readInput("day14_test")
-    check(part1(testInput) == 1588)
+    check(part1(testInput) == 1588L)
     check(part2(testInput) == 2188189693529L)
 
     val input = readInput("day14")
-    check(part1(input) == 3058)
-    println(part2(input))
+    check(part1(input) == 3058L)
+    check(part2(input) == 3447389044530L)
 }
 
-private object Rules {
-    private lateinit var rules: MutableList<String>
-    private lateinit var results: MutableList<Char>
+private fun MutableMap<String, String>.initRules(strRules: List<String>) {
+    strRules.forEach {
+        val (pair, result) = it.split(Regex("""\s+->\s+"""))
+        put(pair, result)
+    }
+}
 
-    fun init(strings: List<String>) {
-        rules = mutableListOf()
-        results = mutableListOf()
-        strings.forEach {
-            val (match, result) = it.split(Regex("""\s+->\s+"""))
-            rules.add(match)
-            results.add(result[0])
+private fun MutableMap<String, Long>.initResults(template: String, rules: Map<String, String>) {
+    rules.keys.forEach {
+        put(it, 0L)
+    }
+    template.windowed(2).forEach {
+        val num = this[it] ?: error("rules should not nonexistent")
+        this[it] = num + 1
+    }
+}
+
+private fun MutableMap<String, Long>.polymerize(steps: Int, rules: Map<String, String>): Long {
+    val resultMap = this
+    repeat(steps) {
+        val tempMap = resultMap.toMutableMap()
+        tempMap.filter { it.value != 0L }.forEach { (key, value) ->
+            val base = rules[key]!!
+            resultMap[key[0] + base] = resultMap[key[0] + base]!! + value
+            resultMap[base + key[1]] = resultMap[base + key[1]]!! + value
+            resultMap[key] = resultMap[key]!! - value
         }
     }
-
-    fun getMatchResult(cs: CharSequence): String {
-        val i = rules.indexOf(cs.toString())
-        if (i != -1) {
-            return results[i].toString()
+    val charMap = mutableMapOf<Char, Long>()
+    resultMap.forEach { (key, value) ->
+        key.forEach { char ->
+            if (charMap.containsKey(char)) {
+                charMap[char] = charMap[char]!! + value
+            } else {
+                charMap[char] = value
+            }
         }
-        error("unknown pair insertion rules!")
     }
+    charMap.forEach { (key, value) ->
+        if (value % 2L == 0L) charMap[key] = value / 2
+        else charMap[key] = value / 2 + 1
+    }
+    return charMap.maxOf { it.value } - charMap.minOf { it.value }
 }
