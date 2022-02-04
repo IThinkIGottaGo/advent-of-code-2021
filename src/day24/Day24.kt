@@ -77,15 +77,22 @@ import util.readInput
  * 所以你还需要通过其他方式来 **找出 MONAD 做了什么**。
  *
  * 第一个问题：为了能够尽可能多的启用潜艇的功能，请找出最大的，不含 0 数码的合法 14 位型号。**能够由 MONAD 接受的最大型号是多少？**
+ *
+ * --- 第二部分 ---
+ *
+ * 正当你的潜艇像 [Retro Encabulator](https://www.youtube.com/watch?v=RXJKdh1KZ0w) 那样正在启动各种功能时，你突然意识到，
+ * 或许你其实不需要启动这么多潜艇上的功能。
+ *
+ * 第二个问题：**能够由 MONAD 接受的最小型号是多少？**
  */
 fun main() {
     // 第一个问题
-    fun part1(input: List<String>): String {
+    fun part1(input: List<String>): Long {
         TODO()
     }
 
     // 第二个问题
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>): Long {
         TODO()
     }
 
@@ -94,6 +101,6 @@ fun main() {
 //    check(part2(testInput) == )
 
     val input = readInput("day24")
-//    println(part1(input))
+//    check(part1(input) == )
 //    check(part2(input) == )
 }

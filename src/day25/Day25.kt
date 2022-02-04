@@ -333,6 +333,8 @@ import util.readInput
  * ```
  *
  * 只有拥有了 [49 颗星星](#) 才能继续。
+ *
+ * 如果你想的话，你现在可以 [再次远程启动雪橇](#) 了。
  */
 fun main() {
     // 第一个问题
@@ -348,17 +350,31 @@ fun main() {
     }
 
     // 第二个问题
-    fun part2(input: List<String>): Long {
-        TODO()
+    fun part2() {
+        println(
+            """
+            你使用了全部的 50 颗星星来增益信号并远程启动了雪橇！
+            现在，你只需要找到返回地面的方法就行了...
+            
+            ...你知道螃蟹潜艇来的时候是挂着彩灯来的吗？
+            
+            恭喜你！你已经完成了 Advent of Code 2021 的每一个谜题了！
+            我希望你们能够从解决这些问题中获得乐趣，就像我在制作它们的时候一样。
+            我很乐意聆听你自己的冒险故事；你可以通过网站上的联系方式和推特找到我。
+            
+            如果你还想在未来看到更多像这样的事件，请考虑赞助 Advent of Code 以及将它们分享给其他人。
+            
+            想了解未来的更多项目，你可以在推特上 follow 我。
+        """.trimIndent()
+        )
     }
 
     val testInput = readInput("day25_test")
     check(part1(testInput) == 58)
-//    check(part2(testInput) == )
 
     val input = readInput("day25")
-    println(part1(input))
-//    check(part2(input) == )
+    check(part1(input) == 406)
+    part2()
 }
 
 private fun List<String>.initSeaCucumbers(): MutableList<SeaCucumber> {
@@ -373,8 +389,7 @@ private fun List<String>.initSeaCucumbers(): MutableList<SeaCucumber> {
 
 private fun MutableList<SeaCucumber>.move(row: Int, column: Int): Boolean {
     var copy = toMutableList()
-    var modified = false
-    modified = moveEast(copy, column, false)
+    var modified = moveEast(copy, column, false)
     copy = toMutableList()
     modified = moveSouth(copy, column, row, modified)
     return modified
